@@ -16,10 +16,15 @@ const defaultColumn = {
   maxWidth: 400,
   Cell: Cell,
   Header: Header,
-  sortType: "alphanumericFalsyLast"
+  sortType: 'alphanumericFalsyLast',
 };
 
-export default function Table({columns, data, dispatch: dataDispatch, skipReset}) {
+export default function Table({
+  columns,
+  data,
+  dispatch: dataDispatch,
+  skipReset,
+}) {
   const sortTypes = useMemo(
     () => ({
       alphanumericFalsyLast(rowA, rowB, columnId, desc) {
@@ -38,26 +43,27 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
         return isNaN(rowA.values[columnId])
           ? rowA.values[columnId].localeCompare(rowB.values[columnId])
           : rowA.values[columnId] - rowB.values[columnId];
-      }
+      },
     }),
     []
   );
 
-  const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = useTable(
-    {
-      columns,
-      data,
-      defaultColumn,
-      dataDispatch,
-      autoResetSortBy: !skipReset,
-      autoResetFilters: !skipReset,
-      autoResetRowState: !skipReset,
-      sortTypes
-    },
-    useFlexLayout,
-    useResizeColumns,
-    useSortBy
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+        defaultColumn,
+        dataDispatch,
+        autoResetSortBy: !skipReset,
+        autoResetFilters: !skipReset,
+        autoResetRowState: !skipReset,
+        sortTypes,
+      },
+      useFlexLayout,
+      useResizeColumns,
+      useSortBy
+    );
 
   function isTableResizing() {
     for (let headerGroup of headerGroups) {
@@ -73,11 +79,14 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
 
   return (
     <>
-      <div {...getTableProps()} className={clsx("table", isTableResizing() && "noselect")}>
+      <div
+        {...getTableProps()}
+        className={clsx('table', isTableResizing() && 'noselect')}
+      >
         <div>
-          {headerGroups.map((headerGroup) => (
-            <div {...headerGroup.getHeaderGroupProps()} className='tr'>
-              {headerGroup.headers.map((column) => column.render("Header"))}
+          {headerGroups.map(headerGroup => (
+            <div {...headerGroup.getHeaderGroupProps()} className="tr">
+              {headerGroup.headers.map(column => column.render('Header'))}
             </div>
           ))}
         </div>
@@ -85,17 +94,20 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <div {...row.getRowProps()} className='tr'>
-                {row.cells.map((cell) => (
-                  <div {...cell.getCellProps()} className='td'>
-                    {cell.render("Cell")}
+              <div {...row.getRowProps()} className="tr">
+                {row.cells.map(cell => (
+                  <div {...cell.getCellProps()} className="td">
+                    {cell.render('Cell')}
                   </div>
                 ))}
               </div>
             );
           })}
-          <div className='tr add-row' onClick={() => dataDispatch({type: "add_row"})}>
-            <span className='svg-icon svg-gray' style={{marginRight: 4}}>
+          <div
+            className="tr add-row"
+            onClick={() => dataDispatch({ type: 'add_row' })}
+          >
+            <span className="svg-icon svg-gray" style={{ marginRight: 4 }}>
               <PlusIcon />
             </span>
             New
