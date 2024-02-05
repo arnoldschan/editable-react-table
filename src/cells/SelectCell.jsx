@@ -91,7 +91,6 @@ export default function SelectCell({
       addSelectRef.focus();
     }
   }, [addSelectRef, showAdd]);
-
   return (
     <>
       <div
@@ -126,8 +125,9 @@ export default function SelectCell({
               className="d-flex flex-wrap-wrap"
               style={{ marginTop: '-0.5rem' }}
             >
-              {options.map(option => (
+              {options.map((option, i) => (
                 <div
+                  key={i}
                   className="cursor-pointer mr-5 mt-5"
                   onClick={() => handleOptionClick(option)}
                 >

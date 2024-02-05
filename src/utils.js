@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 export function shortId() {
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -13,12 +13,12 @@ export function makeData(count) {
   let options = [];
   for (let i = 0; i < count; i++) {
     let row = {
-      ID: faker.mersenne.rand(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
+      ID: faker.number.int(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
       email: faker.internet.email(),
       age: Math.floor(20 + Math.random() * 20),
-      music: faker.music.genre(),
+      music: faker.music.genre()
     };
     options.push({ label: row.music, backgroundColor: randomColor() });
 
